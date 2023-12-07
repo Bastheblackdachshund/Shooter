@@ -9,11 +9,15 @@ public class enemieAttack : MonoBehaviour
     private Transform player;
     private enemymoves enemieScript;
     private bool foundPlayer;
+    public Renderer ren;
+    public Material defaultMaterial;
+    public Material allertMaterial;
 
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         enemieScript = GetComponent<enemymoves>();
+        ren = GetComponent<Renderer>();
     }
 
     void Update()
@@ -24,7 +28,15 @@ public class enemieAttack : MonoBehaviour
             {
                 AttackPlayer();
                 currentCooldown = attackCooldown;
-
+                ren.sharedMaterial = allertMaterial;
+                enemieScript.badGuy.SetDestination(player.position);
+                foundPlayer = true;
+            }
+            else if (foundPlayer)
+            {
+                ren.sharedMaterial = defaultMaterial;
+                enemieScript.newLocation();
+                foundPlayer = false;
             }
         }
         else
