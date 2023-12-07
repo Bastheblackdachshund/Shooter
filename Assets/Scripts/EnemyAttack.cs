@@ -1,54 +1,44 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
-public class enemyattack : MonoBehaviour
+public class enemieAttack : MonoBehaviour
 {
+    public float attackRange = 10f; 
+    public float attackCooldown = 3f; 
+    public int damageAmount = 1; 
+    private float currentCooldown = 0f; 
     private Transform player;
-    private float attackRange = 30f;
-    private Renderer rend;
+    private enemymoves enemieScript;
+    private bool foundPlayer;
 
-    
-
-    private enemymoves enemymoves;
-    private bool foundplayer;
-
-    public Renderer ren;
-    public Material defaultMaterial;
-    public Material allertMaterial;
-
-
-    // Start is called before the first frame update
     void Start()
     {
-
-    } 
-    private void Awake()
-    {
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        enemymoves = GetComponent<enemymoves>();
-        rend = GetComponent<Renderer>();
-
-
-
-        
+        enemieScript = GetComponent<enemymoves>();
     }
-    // Update is called once per frame
+
     void Update()
     {
-        if (Vector3.Distance(transform.position,player.position) <= attackRange)
+        if (currentCooldown <= 0f)
         {
-            rend.sharedMaterial = allertMaterial; // change material
-            enemymoves.badGuy.SetDestination(player.position);// set destination to player position
-            foundplayer = true; // enable bool for chasing
+            if (Vector3.Distance(transform.position, player.position) <= attackRange)
+            {
+                AttackPlayer();
+                currentCooldown = attackCooldown;
+
+            }
         }
-        else if (foundplayer) 
+        else
         {
-            rend.sharedMaterial = defaultMaterial; // set material back
-            enemymoves.newLocation(); // call new locatinon function
-            foundplayer = false; // set bool back to false
+            currentCooldown -= Time.deltaTime;
         }
     }
 
+    void AttackPlayer()
+    {
+        HP playerHealth = player.GetComponent<HP>();
+        if (playerHealth != null)
+        {
+            playerHealth.damage(damageAmount);
+        }
+    }
 }
