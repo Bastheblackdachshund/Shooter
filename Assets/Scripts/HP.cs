@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class HP : MonoBehaviour
@@ -44,6 +45,10 @@ public class HP : MonoBehaviour
                 Coins[i].enabled = false;
             }
         }
+        if( Wealth == 0) 
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+        }
     }
 
     public void damage(int damage)
@@ -54,5 +59,6 @@ public class HP : MonoBehaviour
             cooldownduration = cooldown;
         }
     }
+
 
 }

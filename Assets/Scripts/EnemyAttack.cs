@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class enemieAttack : MonoBehaviour
 {
-    public float attackRange = 10f; 
+    public float seeRange = 20f;
+    public float attackrange = 5.0f;
     public float attackCooldown = 3f; 
     public int damageAmount = 1; 
     private float currentCooldown = 0f; 
@@ -24,13 +25,17 @@ public class enemieAttack : MonoBehaviour
     {
         if (currentCooldown <= 0f)
         {
-            if (Vector3.Distance(transform.position, player.position) <= attackRange)
+            if (Vector3.Distance(transform.position, player.position) <= seeRange)
             {
-                AttackPlayer();
+                
                 currentCooldown = attackCooldown;
                 ren.sharedMaterial = allertMaterial;
                 enemieScript.badGuy.SetDestination(player.position);
                 foundPlayer = true;
+                if (Vector3.Distance(transform.position, player.position) <= attackrange)
+                {
+                    AttackPlayer();
+                }
             }
             else if (foundPlayer)
             {
