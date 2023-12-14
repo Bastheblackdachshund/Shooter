@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GameOver : MonoBehaviour
 {
+    int BS = 0;
     void Start()
     {
         Cursor.lockState = CursorLockMode.None;
@@ -12,7 +13,15 @@ public class GameOver : MonoBehaviour
     }
     public void Playgame ()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        if (BS == 3)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
+        else
+        {
+            BS = BS + 1;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
     }
     public void Main()
     {
