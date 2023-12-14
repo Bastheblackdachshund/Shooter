@@ -32,10 +32,8 @@ public class enemieAttack : MonoBehaviour
                 ren.sharedMaterial = allertMaterial;
                 enemieScript.badGuy.SetDestination(player.position);
                 foundPlayer = true;
-                if (Vector3.Distance(transform.position, player.position) <= attackrange)
-                {
-                    AttackPlayer();
-                }
+               
+                
             }
             else if (foundPlayer)
             {
@@ -50,6 +48,15 @@ public class enemieAttack : MonoBehaviour
         }
     }
 
+    
+    private void OnTriggerEnter(Collider collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            AttackPlayer();
+        }
+    }
+   
     void AttackPlayer()
     {
         HP playerHealth = player.GetComponent<HP>();

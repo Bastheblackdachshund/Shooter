@@ -14,8 +14,8 @@ public class HP : MonoBehaviour
     public Image[] Coins;
     public Sprite FullPoach;
     public Sprite EmptyPoach;
-    public float cooldown = 3f;
-    public float cooldownduration = 0f;
+    private float cooldown = 0f;
+    private float cooldownduration = 0f;
 
     void Update()
     {
@@ -57,6 +57,7 @@ public class HP : MonoBehaviour
         {
             Wealth -= damage;
             cooldownduration = cooldown;
+            Debug.Log(cooldownduration);
         }
     }
 
